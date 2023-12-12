@@ -8,8 +8,21 @@ Cypress.Commands.add('login', (email, password) => {
     cy.contains('Welcome, John Doe!').should('be.visible')
   });
 
+  Cypress.Commands.add('openItemPage', () => {
+    cy.visit('');
+    cy.get("#search").click().type("shirt{enter}")
+    cy.get("ol.product-items").find("li").first().find('.product-item-link').as('productLink')
+    cy.get('@productLink').invoke('text').then((productName) => {
+        cy.get('@productLink').invoke('attr', 'href').then((url) => {
+            cy.get('@productLink').click()
+            cy.get('[data-ui-id="page-title-wrapper"]').should('have.text', productName.trim())
+            cy.url().should('equal', url)
+
+        })
+    })
+
+  });
+
   Cypress.on('uncaught:exception', (err, runnable) => {
-    if (err.message.includes('AddFotoramaVideoEvents is not a function')) {
       return false
-    }
   })

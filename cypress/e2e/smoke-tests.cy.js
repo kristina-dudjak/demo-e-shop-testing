@@ -20,9 +20,7 @@ describe("Smoke tests", () => {
     })
 
     it("Add item to cart", () => {
-      cy.visit("/")
-      cy.get("#search").click().type("shirt{enter}")
-      cy.get("ol.product-items").find("li").first().click()
+      cy.openItemPage();
       cy.get(".swatch-option.text").first().click()
       cy.get(".swatch-option.color").first().click()
       cy.get("#product-addtocart-button").click()
@@ -37,9 +35,7 @@ describe("Smoke tests", () => {
     })
 
     it("Place an order", () => {
-      cy.visit("/")
-      cy.get("#search").click().type("shirt{enter}")
-      cy.get("ol.product-items").find("li").first().click()
+      cy.openItemPage();
       cy.get(".swatch-option.text").first().click()
       cy.get(".swatch-option.color").first().click()
       cy.get("#product-addtocart-button").click()
@@ -75,9 +71,7 @@ describe("Smoke tests", () => {
     })
 
     it("Remove item from cart", () => {
-      cy.visit("/")
-      cy.get("#search").click().type("shirt{enter}")
-      cy.get("ol.product-items").find("li").first().click()
+       cy.openItemPage()
       cy.get(".swatch-option.text").first().click()
       cy.get(".swatch-option.color").first().click()
       cy.get("#product-addtocart-button").click()
@@ -95,9 +89,7 @@ describe("Smoke tests", () => {
 
   it("Users cart items saved after relogin", () => {
     cy.login('johnny.doe@gmail.com', 'Password1')
-    cy.visit("/")
-    cy.get("#search").click().type("shirt{enter}")
-    cy.get("ol.product-items").find("li").first().click()
+    cy.openItemPage()
     cy.get(".swatch-option.text").first().click()
     cy.get(".swatch-option.color").first().click()
     cy.get("#product-addtocart-button").click()
