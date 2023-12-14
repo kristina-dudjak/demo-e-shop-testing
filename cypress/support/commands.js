@@ -1,12 +1,9 @@
 Cypress.Commands.add('login', (email, password) => {
-    cy.visit('');
-    cy.get('ul').find('li').contains('a', 'Sign In').click()
-    cy.get('#email').click().type(email)
-    cy.get('#pass').click().type(password)
-    cy.get('#send2').click()
-    cy.url().should('eq', Cypress.config().baseUrl)
+    cy.visit('customer/account/login')
+    cy.get('#email').type(email)
+    cy.get('#pass').type(`${password}{enter}`)
     cy.contains('Welcome, John Doe!').should('be.visible')
-  });
+  })
 
   Cypress.Commands.add('openItemPage', () => {
     cy.visit('');
@@ -20,7 +17,6 @@ Cypress.Commands.add('login', (email, password) => {
 
         })
     })
-
   });
 
   Cypress.on('uncaught:exception', (err, runnable) => {
