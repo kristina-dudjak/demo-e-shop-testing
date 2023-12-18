@@ -1,7 +1,7 @@
-Cypress.Commands.add('login', (email, password) => {
+Cypress.Commands.add('login', () => {
     cy.visit('customer/account/login')
-    cy.get('#email').type(email)
-    cy.get('#pass').type(`${password}{enter}`)
+    cy.get('#email').type('johnny.doe@gmail.com')
+    cy.get('#pass').type('Password1{enter}')
     cy.contains('Welcome, John Doe!').should('be.visible')
   })
 
