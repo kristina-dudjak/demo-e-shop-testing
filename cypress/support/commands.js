@@ -1,4 +1,5 @@
 import loginPage from "../pages/user/loginPage"
+import homePage from "../pages/homePage"
 
 Cypress.Commands.add("login", () => {
   cy.session("userSession", () => {
@@ -7,28 +8,15 @@ Cypress.Commands.add("login", () => {
       loginPage.inputEmail(user.email)
       loginPage.inputPassword(user.password)
       loginPage.submitLogin()
-      loginPage.elements
-        .welcomeMsg()
-        .should("include.text", 'Welcome')
+      loginPage.elements.welcomeMsg().should("include.text", "Welcome")
     })
   })
 })
 
 Cypress.Commands.add("openItemPage", () => {
   cy.visit("")
-  cy.get("#search").click().type("shirt{enter}")
-  cy.get("ol.product-items")
-    .find("li")
-    .first()
-    .find(".product-item-link")
-    .as("productLink")
-  cy.get("@productLink").then((productLink) => {
-    const productName = productLink.text().trim()
-    const url = productLink.attr("href")
-    cy.wrap(productLink).click()
-    cy.get('[data-ui-id="page-title-wrapper"]').should("have.text", productName)
-    cy.url().should("equal", url)
-  })
+  homePage.searchProducts("shirt")
+  homePage.correctProductLinkAndPage()
 })
 
 Cypress.Commands.add("awaitRequest", () => {
@@ -46,7 +34,6 @@ Cypress.Commands.add("awaitUiRequest", () => {
   ).as("collectionRequest")
   cy.wait("@collectionRequest")
 })
-
 
 Cypress.on("uncaught:exception", (err, runnable) => {
   return false
